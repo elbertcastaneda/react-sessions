@@ -1,6 +1,7 @@
 const {
   GraphQLObjectType,
   GraphQLList,
+  GraphQLString
 } = require('graphql');
 
 const PokemonType = require('./PokemonType');
@@ -11,7 +12,18 @@ const QueryType = new GraphQLObjectType({
   fields: () => ({
     pokemons: {
       type: GraphQLList(PokemonType),
-      resolve: () => [],
+      resolve: (root, args, context) => context.apiClient.getPokemonList(),
+    },
+    pokemon: {
+      type: PokemonType,
+      args: {
+        name: { type: GraphQLString }
+      },
+      resolve: (root, args, context) => {
+        return context.apiClient.getPokemonList().find((pokemon) => {
+          return pokemon.name === args.name;
+        });
+      },
     },
   }),
 });
