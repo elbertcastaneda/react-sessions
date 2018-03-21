@@ -12,6 +12,7 @@ const QueryType = new GraphQLObjectType({
   fields: () => ({
     pokemons: {
       type: GraphQLList(PokemonType),
+<<<<<<< HEAD
       resolve: (root, args, context) => context.apiClient.getPokemonList(),
     },
     pokemon: {
@@ -24,6 +25,10 @@ const QueryType = new GraphQLObjectType({
           return pokemon.name === args.name;
         });
       },
+=======
+      resolve: (root, args, { apiClient }) =>
+        apiClient.getPokemonList(),
+>>>>>>> ee36b3eca92c07e4da44b78c47e9e0a0d52e91a9
     },
   }),
 });
